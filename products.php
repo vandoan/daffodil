@@ -1,4 +1,22 @@
 <?php
+
+function get_list_view_html($product_id, $product) {
+
+        $output=""; 
+
+        $output = $output .  "<li>";
+        $output = $output .  '<a href="shirt.php?id=' . $product_id . '" >';
+        $output = $output .  '<img src="'. $product["img"] . '" alt"' . $product["name"] . '">';
+        $output = $output .  "<p>" .  $product['name']; 
+        $output = $output .  "View Details </p>"; 
+        $output = $output .  "</a>"; 
+        $output = $output .  "</li>"; 
+
+        return $output; 
+}
+
+
+
 $products = array();
 $products[101] = array(
 	"name" => "Logo Shirt, Red",
@@ -11,7 +29,6 @@ $products[102] = array(
     "img" => "img/shirts/shirt-102.jpg",
     "price" => 20,
     "description" => "It's black!"
-
 );
 $products[103] = array(
     "name" => "Mike the Frog Shirt, Blue",
@@ -48,5 +65,4 @@ $products[108] = array(
     "img" => "img/shirts/shirt-108.jpg",    
     "price" => 25,
     "description" => "It's Orange!"
-);
-?> 
+); ?>

@@ -1,56 +1,44 @@
 <?php 
 $pageTitle = "Unique T-shirts designed by a frog"; 
 
-include('header.php'); ?> 
+	include('header.php'); 
+?> 
 
 		<div class="section banner">
-
 			<div class="wrapper">
-
 				<img class="hero" src="img/mike-the-frog.png" alt="Mike the Frog says:">
 				<div class="button">
-					<a href="#">
+					<a href="shirts.php">
 						<h2>Hey, I&rsquo;m Mike!</h2>
 						<p>Check Out My Shirts</p>
 					</a>
 				</div>
 			</div>
-
 		</div>
 
 		<div class="section shirts latest">
-
 			<div class="wrapper">
-
 				<h2>Mike&rsquo;s Latest Shirts</h2>
 
-				<ul class="products">
-					<li><a href="#">
-							<img src="img/shirts/shirt-108.jpg">
-							<p>View Details</p>
-						</a>
-					</li><li>
-						<a href="#">
-							<img src="img/shirts/shirt-107.jpg">
-							<p>View Details</p>
-						</a>
-					</li><li>
-						<a href="#">
-							<img src="img/shirts/shirt-106.jpg">
-							<p>View Details</p>
-						</a>
-					</li><li>
-						<a href="#">
-							<img src="img/shirts/shirt-105.jpg">
-							<p>View Details</p>
-						</a>
-					</li>								
-				</ul>
+				<?php include("products.php"); ?> 								
+					<ul class="products"> 
+					
+					<?php 
+						$total_products = count($product); 
+						$position = 0;
 
+						foreach($products as $product_id => $product) {
+							$position = $position +1 ; 
+							if ($total_products - $position < 4){
+							$list_view_html = get_list_view_html($product_id, $product) . $list_view_html; 
+							}
+						}
+						echo $list_view_html;
+					?> 
+
+				</ul> 
 			</div>
-
 		</div>
-
 	</div>
 
 	<?php include('footer.php'); ?> 
