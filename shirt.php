@@ -1,13 +1,44 @@
-<?php 
+<?php include("products.php"); 
 
-$pageTitle = "Mike's Full Catalog of Shirts"; 
-$section = "shirts";
-include('header.php'); ?> 
+if (isset($_GET["id"])) {
+	$product_id = $_GET["id"]; 
+	if (isset($products[$product_id])) {
+		$product = $products[$product_id]; 
+		}
+	}
+if (!isset($product)) {
+	header("Location: shirts.php");
+	exit();
+	}
+
+$section = "shirts"; 
+$pageTitle = $product["name"]; 
+include("header.php"); ?> 
 	
-	<div class="section"> 
+	<div class="section page"> 
 
-		<h1>Mike&rsquo;s Full Catalog of Shirts</1> 
+		<div class="wrapper"> 
 
-		</div> 
+			<div class="breadcrumb"><a href="shirts.php">Shirts</a> &gt; <?php echo $product["name"]; ?>
+			</div>
 
-		<?php include('footer.php'); ?> 
+			<div class="shirt-picture">
+				<span> 
+					<img src="<?php echo $product['img']; ?>"  alt="<?php echo $product['name']; ?>">
+				</span> 
+
+			</div>
+			<div class="shirt-details"> 
+				<h1><span class="price">
+					$<?php echo $product["price"]; ?> </span> 
+					<?php echo $product["name"]; ?></h1>
+
+
+				<p class="note-designer">*All shirts are designed by Mike the Frog.</p>
+			</div>
+
+		</div>
+
+	</div> 
+
+	<?php include("footer.php"); ?> 
