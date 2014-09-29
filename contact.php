@@ -1,19 +1,53 @@
 <?php 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	$name= $_POST["name"];
-	$email = $_POST["email"];
-	$message = $_POST["message"];
-	$countries = $_POST["countries"];
+	$name= trim($_POST["name"]);
+	$email = trim($_POST["email"]);
+	$message = trim($_POST["message"]);
+	$countries = trim($_POST["countries"]);
+
+	if ($name =="" OR $email =="" OR $message=="") {
+		echo "You must specify a value for name, email address, and message."; 
+		exit; 
+	}
+
+	foreach( $_POST as $value){
+		if( stripos($value, "Content-Type:") !== FALSE){
+			echo "There was a problem witht he information you entered.";
+			exit;
+		}
+	}
+
+	if ($_POST["address"] != "") {
+		echo "Your form submission has an error."; 
+		exit; 
+	}
+
+	require_once("class.phpmailer.php");
+	$mail = new PHPMailer(); 
+
+	if (!$mail->ValidateAddress($email)){
+		echo "You must specify a valid email address."; 
+		exit; 
+	}
+
 
 	$email_body =""; 
-
-	$email_body = $email_body . "Name: " . $name . "\n";
-	$email_body = $email_body . "Email: " . $email . "\n";
+	$email_body = $email_body . "Name: " . $name . "<br>";
+	$email_body = $email_body . "Email: " . $email . "<br>";
 	$email_body = $email_body . "Message: " . $message; 
 	$email_body = $email_body . "Countries: " . $message; 
 
-	// todo: send email
+	$mail->SetFrom($email,$name);
+	$address = "vdoan09@gmail.com";
+	$mail->AddAddress($address, "Mike's Shirt");
+	$mail->Subject    = "A Message from Mike's Shirt |" . $name;
+	$mail->MsgHTML($email_body);
+
+	if(!$mail->Send()) {
+	  echo "There was a problem sending the email:: " . $mail->ErrorInfo;
+		exit; 
+	}
 
 	header('Location: contact.php?status=thanks');
 	exit;
@@ -61,6 +95,15 @@ $section = "contact";
 								</th>
 								<td>
 									<textarea name="message" id="message"></textarea>
+								</td> 
+							</tr>
+							<tr style="display:none;">
+								<th>
+									<label for="address">address</label>
+								</th>
+								<td>
+									<input type="text"  name="address" id="address"></textarea>
+									<p> Humnans leave the field blank. </p>
 								</td> 
 							</tr>
 							<tr> <th><label for='Countries'>Select the countries that you have visited:

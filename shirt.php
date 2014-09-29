@@ -9,6 +9,7 @@ if (isset($_GET["id"])) {
 	header("Location: shirts.php");
 	exit();
 	}
+	
 $section = "shirts"; 
 $pageTitle = $product["name"]; 
 include("header.php"); ?> 

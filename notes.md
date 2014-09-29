@@ -28,3 +28,5 @@
 - countries[]
 
 - $product_id = $_GET["id"]; 
+
+-  trim()
